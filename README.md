@@ -2,6 +2,8 @@
 
 This is a Pure Javascript Project in order to understand DOM manupulating.
 
+[Live View](https://m0xai.github.io/etch-a-sketch/)
+
 ## Important Topics
 
 - Create HTML element via Javascript.
