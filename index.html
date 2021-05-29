@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="An Application that sketches colors in boxes via mouse hover event.">
+    <title>Etch-a-sketch App</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <header id="header">
+    </header>
+    <div id="main">
+    </div>
+    <footer>
+    </footer>
+        <script>
+            const title = document.createElement('h1'); 
+            const titleText = document.createTextNode('Etch-a-sketch');
+            title.style.cssText = 'font-size: 3em; color: black; -webkit-text-fill-color: white; -webkit-text-stroke-width: 1px; -webkit-text-stroke-color: black;';
+            title.appendChild(titleText);
+            document.getElementById('header').appendChild(title);
+            document.getElementById('header').style.cssText = 'display: flex; flex-flow: column nowrap; align-items: center'
+            const changeBtn = document.createElement('BUTTON')
+            changeBtn.innerText = 'Change Size';
+            // Init elements here
+            let userSizeInput;
+            let gridItem = document.getElementsByClassName('gridBox');
+            let allowedInputs = [];
+            const siteBody = document.body;
+            const boxContainer = document.createElement('div');
+            boxContainer.setAttribute('id', 'boxContainer');
+            boxContainer.style.cssText = `border-radius: 10px; background-image: url("img/boxBg.png"); background-size: cover; margin: 0 auto; display: grid; width: 512px; height: 512px; background-color: white;`
+            document.getElementById('main').appendChild(boxContainer);
+
+            changeBtn.classList.add('changeButton');
+            document.getElementById('header').appendChild(changeBtn);
+            changeBtn.addEventListener('click', () => {
+                    userSizeInput = parseInt(prompt('Give a size number between 1 - 64'));
+                    return inputCheck();
+                });
+
+            // Check Input, it should be a number from 1 to 64.
+            for(i = 1; i < 65; i++) {
+                allowedInputs.push(i);
+            }
+
+            function inputCheck() {
+                if (allowedInputs.indexOf(userSizeInput) == -1) {
+                    alert('You should better give a number between 1 and 64')
+                } else {
+                    deleteBexes();
+                    createBoxes();
+                    giveFrtoColumns();
+                }
+            }
+
+            // Create and delete Boxes
+            function createBoxes() {
+                for (let i = 0; i < userSizeInput**2; i++) {
+                gridItem = document.createElement('div');
+                gridItem.className = 'gridBox';
+                gridItem.setAttribute('onmouseover', 
+                        `this.style.backgroundColor = 'hsl(' + (Math.random() * 360) + ',' + (Math.random() * 100) + '%, 50%)'`
+                )
+                gridItem.style.cssText = 'height: 1fr; width: 1fr; border: 1px solid darkgrey;';
+                document.getElementById('boxContainer').appendChild(gridItem);
+                }
+            }
+
+            //  This needs user input as a number
+                function giveFrtoColumns() {
+                    boxContainer.style.gridTemplateColumns = `repeat(${userSizeInput}, 1fr)`
+                }
+
+            function deleteBexes() {
+                document.getElementById('boxContainer').innerHTML = '';
+            }
+            // Dynamic Styling             
+            let bgColors = setInterval(random_bg_color, 3000);
+            
+            function random_bg_color() {
+                    var x = Math.floor(Math.random() * 256);
+                    var y = Math.floor(Math.random() * 256);
+                    var z = Math.floor(Math.random() * 256);
+                    var bgColor = "rgb(" + x + "," + y + "," + z + ")";
+                    console.log(bgColor);
+                    document.body.style.background = bgColor;
+                }
+
+            const bodyStyles = {
+                "background-color": "palegreen",
+                "transition": "background-color 2s",
+                "background-repeat": "no-repeat",
+                "height": "100vh",
+                "display": "flex",
+                "flex-flow": "column nowrap",
+                "align-items": "center",
+                "font-family": `-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif`,
+            }
+
+            // Assign Styles
+            Object.assign(document.body.style, bodyStyles);
+            changeBtn.style.cssText = "background-color: black; border: none; color: white; padding: 10px; margin: 10px 10px 50px 6px; border-radius: 5px; box-shadow: rgba(0,0,0,.30) 0 2px 3px; font-size: 1em;"
+            
+            const fussNoten = document.createElement('p');
+            fussNoten.setAttribute('id', 'footerText');
+            fussNoten.style.cssText = 'padding-top: 40px'
+            fussNoten.innerHTML = 'Created by <a href="https://github.com/m0xai" title="Me on Github">m0xai</a> in Germany on 29 May 2021 with Philomathie.'
+            document.getElementsByTagName('FOOTER')[0].appendChild(fussNoten);
+        </script>
+</body>
+</html>
